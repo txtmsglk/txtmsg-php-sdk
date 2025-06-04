@@ -1,0 +1,9 @@
+/vendor/
+.env
+.DS_Store
+*.log
+.idea/
+.vscode/
+.history/
+node_modules/
+composer.lock
