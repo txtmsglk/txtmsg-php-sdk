@@ -92,7 +92,7 @@ print_r($balance);
 ## 🆘 Support
 
 - 📧 Email: support@txtmsg.lk
-- 📞 Phone: +94 773 559 304 / +94 716 170 000
+- 📞 Phone: +94 773 59 304 / +94 716 170 000
 
 ## 🪪 License
 
