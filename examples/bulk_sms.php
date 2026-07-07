@@ -1,17 +1,21 @@
 <?php
-require '../TxtmsgClient.php';
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Txtmsg\PhpSdk\TxtmsgClient;
+use Txtmsg\PhpSdk\TxtmsgException;
 
 $client = new TxtmsgClient('your_api_key');
 
-// Example: Send bulk SMS campaign
 try {
-    $response = $client->sendCampaign([
-        'recipients' => ['94771234567', '94777654321'],
+    $response = $client->sendSMS([
+        'recipient' => '94771234567,94777654321',
         'sender_id' => 'TXTMSG',
-        'message' => 'Bulk SMS campaign test'
+        'type'      => 'plain',
+        'message'   => 'Bulk SMS campaign test from TXTMSG.lk',
     ]);
-    echo "Campaign Response:\n";
+
     print_r($response);
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+} catch (TxtmsgException $e) {
+    echo 'Error [' . $e->getCode() . ']: ' . $e->getMessage() . PHP_EOL;
 }

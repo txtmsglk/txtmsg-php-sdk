@@ -1,59 +1,61 @@
-# 📱 Txtmsg.lk PHP SDK
+# TXTMSG.lk PHP SDK — PHP SMS Gateway Integration for Sri Lanka
 
-Official PHP SDK for interacting with the [txtmsg.lk](https://txtmsg.lk) SMS platform API. This library provides an easy way to integrate SMS functionality, contact management, and campaign features into your PHP applications.
+Official PHP SDK for [TXTMSG.lk](https://txtmsg.lk) SMS Gateway API v3. Send bulk SMS, transactional SMS, campaigns, and manage contacts from any PHP 8.1+ application. The reliable PHP SMS client for Sri Lanka's leading SMS gateway.
 
-## 🚀 Features
+## Features
 
-- 📤 Send SMS (Single messages and campaigns)
-- 👥 Contact management (Groups and individual contacts)
-- 📊 Message tracking and campaign analytics
-- 💰 Balance checking and profile management
-- 🔒 Secure API authentication
+- **Send SMS** — Deliver single or bulk messages to any country via REST API
+- **Campaign Management** — Send SMS campaigns using contact lists
+- **Contact Groups** — Create, update, and manage contact groups
+- **Contacts** — Import and manage individual contacts within groups
+- **Schedule Messages** — Set future delivery times for your SMS
+- **Balance & Profile** — Check remaining SMS units and account details
+- **DLT Support** — Send DLT-compliant messages with template IDs
+- **Guzzle HTTP Client** — Built on Guzzle 7 with PSR-18 support
 
-## 📦 Installation
+## Requirements
 
-### Manual Installation
+- PHP 8.1+
+- `guzzlehttp/guzzle` ^7.0 (installed automatically)
 
-1. Download the `TxtmsgClient.php` file
-2. Include it in your PHP project:
+## Installation
 
-```php
-require_once 'path/to/TxtmsgClient.php';
+Install via Composer:
+
+```bash
+composer require txtmsg/php-sdk
 ```
 
-## 🔧 Usage
+## Quick Start
 
 ### Initialize the Client
 
 ```php
+use Txtmsg\PhpSdk\TxtmsgClient;
+
 $client = new TxtmsgClient('your_api_key');
 ```
 
 ### Send an SMS
 
 ```php
+use Txtmsg\PhpSdk\TxtmsgClient;
+use Txtmsg\PhpSdk\TxtmsgException;
+
+$client = new TxtmsgClient('your_api_key');
+
 try {
     $response = $client->sendSMS([
         'recipient' => '94771234567',
         'sender_id' => 'TXTMSG',
-        'message'   => 'Hello from txtmsg.lk!'
+        'type'      => 'plain',
+        'message'   => 'Hello from TXTMSG.lk!',
     ]);
+
     print_r($response);
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+} catch (TxtmsgException $e) {
+    echo 'Error: ' . $e->getMessage();
 }
-```
-
-### Manage Contact Groups
-
-```php
-// Create a contact group
-$response = $client->createContactGroup([
-    'name' => 'My Contact Group'
-]);
-
-// View all contact groups
-$groups = $client->viewAllContactGroups();
 ```
 
 ### Check Balance
@@ -63,51 +65,94 @@ $balance = $client->viewBalance();
 print_r($balance);
 ```
 
-## 📚 Available Methods
+### Send a Campaign to Contact Lists
+
+```php
+$client->sendCampaign([
+    'contact_list_id' => '6415907d0d37a',
+    'sender_id'       => 'TXTMSG',
+    'type'            => 'plain',
+    'message'         => 'Campaign message',
+    'schedule_time'   => '2025-12-20 07:00',
+]);
+```
+
+## API Reference
+
+All methods return an array with the API response.
 
 ### SMS Operations
-- `sendSMS(array $params)` - Send a single SMS
-- `sendCampaign(array $params)` - Send bulk SMS campaign
-- `viewSMS(string $uid)` - View specific SMS details
-- `viewAllMessages()` - List all messages
-- `viewCampaign(string $uid)` - View campaign details
 
-### Contact Management
-- `createContactGroup(array $params)` - Create a new contact group
-- `viewAllContactGroups()` - List all contact groups
-- `updateContactGroup(string $groupId, array $params)` - Update a group
-- `deleteContactGroup(string $groupId)` - Delete a group
-- `createContact(string $groupId, array $params)` - Add contact to group
-- `viewContact(string $groupId, string $uid)` - View contact details
+| Method | Description |
+|--------|-------------|
+| `sendSMS(array $params)` | Send SMS via POST (single & bulk) |
+| `sendSMSViaGet(array $params)` | Send SMS via GET (simpler alternative) |
+| `sendCampaign(array $params)` | Send campaign to contact list(s) |
+| `viewSMS(string $uid)` | View details of a sent SMS |
+| `viewAllMessages()` | List all sent messages with pagination |
+| `viewCampaign(string $uid)` | View campaign details |
 
-### Account Management
-- `viewBalance()` - Check account balance
-- `viewProfile()` - View account profile
+### Contact Groups
 
-## 📘 Documentation
+| Method | Description |
+|--------|-------------|
+| `viewAllContactGroups()` | Retrieve all contact groups |
+| `createContactGroup(array $params)` | Create a new contact group |
+| `viewContactGroup(string $groupId)` | Get group details |
+| `updateContactGroup(string $groupId, array $params)` | Update a group |
+| `deleteContactGroup(string $groupId)` | Delete a group |
+
+### Contacts
+
+| Method | Description |
+|--------|-------------|
+| `createContact(string $groupId, array $params)` | Add a contact to a group |
+| `viewContact(string $groupId, string $uid)` | View contact details |
+| `updateContact(string $groupId, string $uid, array $params)` | Update a contact |
+| `deleteContact(string $groupId, string $uid)` | Delete a contact |
+| `viewAllContactsInGroup(string $groupId)` | List contacts in a group |
+
+### Account
+
+| Method | Description |
+|--------|-------------|
+| `viewBalance()` | Check remaining SMS units |
+| `viewProfile()` | View account profile |
+
+## SMS Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `recipient` | Yes | Phone number(s). Use comma for multiple |
+| `sender_id` | Yes | Sender ID (max 11 characters) |
+| `type` | Yes | Message type (`plain`) |
+| `message` | Yes | SMS message body |
+| `schedule_time` | No | Schedule delivery (Y-m-d H:i) |
+| `dlt_template_id` | No | DLT template ID |
+
+## About TXTMSG.lk
+
+[TXTMSG.lk](https://txtmsg.lk) is a Sri Lankan SMS gateway provider offering reliable bulk SMS services, transactional SMS APIs, and messaging solutions for businesses. The API v3 provides RESTful endpoints for SMS delivery, contact management, and campaign automation with worldwide coverage.
+
+## Documentation
 
 - [API Documentation](https://documentation.txtmsg.lk)
 - [Postman Collection](https://documenter.getpostman.com/view/21165322/2sB2qf9e5y)
 
-## 🆘 Support
+## Support
 
-- 📧 Email: support@txtmsg.lk
-- 📞 Phone: +94 773 59 304 / +94 716 170 000
+- Email: support@txtmsg.lk
+- Phone: +94 773 59 304 / +94 716 170 000
 
-## 🪪 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see the [LICENSE](LICENSE) file.
 
-## ✨ Contributing
+## Changelog
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-Made with ❤️ by [txtmsg.lk](https://txtmsg.lk)
+### v2.0.0
+- Added namespace (`Txtmsg\PhpSdk`) and PSR-4 autoloading
+- Replaced cURL with Guzzle HTTP client
+- PHP 8.1+ with typed properties and return types
+- Added `TxtmsgException` for typed error handling
+- Customizable Guzzle client via constructor injection

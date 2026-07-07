@@ -1,0 +1,20 @@
+{
+    "name": "txtmsg/php-sdk",
+    "description": "Official PHP SDK for TXTMSG.lk SMS Gateway API v3 — Send bulk SMS, transactional SMS, and manage contacts from any PHP application",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Txtmsg\\PhpSdk\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    }
+}

@@ -1,29 +1,34 @@
 <?php
-require '../TxtmsgClient.php';
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Txtmsg\PhpSdk\TxtmsgClient;
+use Txtmsg\PhpSdk\TxtmsgException;
 
 $client = new TxtmsgClient('your_api_key');
 
 try {
-    // Create a contact group
     $group = $client->createContactGroup([
-        'name' => 'Test Group'
+        'name' => 'Test Group',
     ]);
-    echo "Created Group:\n";
+
+    echo 'Created Group:' . PHP_EOL;
     print_r($group);
 
-    // Add contacts to group
-    $contact = $client->createContact($group['id'], [
-        'name' => 'John Doe',
-        'mobile' => '94771234567',
-        'email' => 'john@example.com'
-    ]);
-    echo "\nAdded Contact:\n";
-    print_r($contact);
+    if (isset($group['data']['uid'])) {
+        $contact = $client->createContact($group['data']['uid'], [
+            'PHONE'     => '94771234567',
+            'FIRST_NAME' => 'John',
+            'LAST_NAME'  => 'Doe',
+        ]);
 
-    // View all groups
+        echo PHP_EOL . 'Added Contact:' . PHP_EOL;
+        print_r($contact);
+    }
+
     $groups = $client->viewAllContactGroups();
-    echo "\nAll Groups:\n";
+    echo PHP_EOL . 'All Groups:' . PHP_EOL;
     print_r($groups);
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+} catch (TxtmsgException $e) {
+    echo 'Error [' . $e->getCode() . ']: ' . $e->getMessage() . PHP_EOL;
 }
