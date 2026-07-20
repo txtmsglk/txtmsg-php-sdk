@@ -1,6 +1,6 @@
 # TXTMSG.lk PHP SDK — PHP SMS Gateway Integration for Sri Lanka
 
-Official PHP SDK for [TXTMSG.lk](https://txtmsg.lk) SMS Gateway API v3. Send bulk SMS, transactional SMS, campaigns, and manage contacts from any PHP 8.1+ application. The reliable PHP SMS client for Sri Lanka's leading SMS gateway.
+Official PHP SDK for [TXTMSG.lk](https://txtmsg.lk) — [Sri Lanka's SMS gateway](https://txtmsg.lk) API v3. Send [bulk SMS](https://txtmsg.lk/pricing), transactional SMS, campaigns, and manage contacts from any PHP 8.1+ application. Get started with [free trial credits](https://txtmsg.lk/register).
 
 ## Features
 
@@ -35,6 +35,8 @@ use Txtmsg\PhpSdk\TxtmsgClient;
 
 $client = new TxtmsgClient('your_api_key');
 ```
+
+[Get your API key →](https://txtmsg.lk/register)
 
 ### Send an SMS
 
@@ -132,12 +134,15 @@ All methods return an array with the API response.
 
 ## About TXTMSG.lk
 
-[TXTMSG.lk](https://txtmsg.lk) is a Sri Lankan SMS gateway provider offering reliable bulk SMS services, transactional SMS APIs, and messaging solutions for businesses. The API v3 provides RESTful endpoints for SMS delivery, contact management, and campaign automation with worldwide coverage.
+[TXTMSG.lk](https://txtmsg.lk) is a [Sri Lankan SMS gateway](https://txtmsg.lk) provider offering reliable [bulk SMS services](https://txtmsg.lk/pricing), [transactional SMS APIs](https://txtmsg.lk/developers), and [messaging solutions](https://txtmsg.lk/solutions) for businesses. The API v3 provides RESTful endpoints for SMS delivery, contact management, and campaign automation with worldwide coverage.
 
-## Documentation
+## Links
 
-- [API Documentation](https://documentation.txtmsg.lk)
-- [Postman Collection](https://documenter.getpostman.com/view/21165322/2sB2qf9e5y)
+- 🌐 [Website](https://txtmsg.lk)
+- 💰 [Pricing](https://txtmsg.lk/pricing)
+- 📖 [API Documentation](https://documentation.txtmsg.lk)
+- 🧪 [Postman Collection](https://documenter.getpostman.com/view/21165322/2sB2qf9e5y)
+- 🚀 [Create Free Account](https://txtmsg.lk/register)
 
 ## Support
 
